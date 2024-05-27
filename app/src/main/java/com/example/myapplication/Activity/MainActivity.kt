@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
             if (txtussername == "admin" && txtpassword == "1"){
                 val intent = Intent(this, AdminActivity::class.java)
                 startActivity(intent);
+            }
+            else  if(txtussername == "1" && txtpassword == "1") {
+                val intent = Intent(this, UserActivity::class.java)
+                startActivity(intent);
+            }else  {
+                Toast.makeText(this, "Tài khoaản mật khẩu khng đúng", Toast.LENGTH_SHORT).show()
             }
         }
 

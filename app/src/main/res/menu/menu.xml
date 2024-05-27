@@ -52,5 +52,10 @@
         android:icon="@drawable/dashboard1day"
         android:title="Loại sản phẩm"
         />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout"
+        android:title="Đăng xuất"
+        />
 
 </menu>

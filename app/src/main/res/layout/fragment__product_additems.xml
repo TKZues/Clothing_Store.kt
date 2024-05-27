@@ -5,190 +5,199 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:background="@color/blue_300"
-            android:padding="6dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#1E2653"
-            android:textStyle="normal"
-            android:textSize="20dp"
-            android:text="Thêm sản phẩm mới" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_300"
+                android:padding="6dp"
+                android:text="Thêm sản phẩm mới"
+                android:textColor="#1E2653"
+                android:textSize="20dp"
+                android:textStyle="normal" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView22"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="Mã sản phẩm" />
-                <EditText
-                    android:id="@+id/edt_masp"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_border"
-                    />
-                <TextView
-                    android:id="@+id/textView4r"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="Tên sản phẩm" />
-                <EditText
-                    android:id="@+id/edt_tensp"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_border"
-                    />
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:textSize="15dp"
-                    android:layout_height="30dp"
-                    android:text="Giá bán" />
-                <EditText
-                    android:id="@+id/edt_gia"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_border"
-                    />
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginRight="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="Mã sản phẩm" />
-
-                        <EditText
-                            android:id="@+id/edt_maloai"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_border" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="Mã sản phẩm" />
-
-                        <EditText
-                            android:id="@+id/edt_donvi"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_border" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="Hình ảnh" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/image_gallery"
-                    android:layout_marginVertical="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/images" />
-
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mã sản phẩm"
+                        android:textSize="15dp" />
 
                     <EditText
-                        android:layout_width="0dp"
-                        android:id="@+id/edt_image"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7"
+                        android:id="@+id/edt_masp"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/edittext_border" />
 
-                    <Button
-                        android:id="@+id/btn_selectimage"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/textView4r"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tên sản phẩm"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/edt_tensp"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_border" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="Giá bán"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/edt_gia"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_border" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/buttonsearch"
-                        android:background="@drawable/button_add"
-                        android:text="..." />
-                </LinearLayout>
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/button_addproduct"
-                        android:layout_width="0dp"
+                            <TextView
+                                android:id="@+id/textView8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mã sản phẩm"
+                                android:textSize="15dp" />
+
+                            <EditText
+                                android:id="@+id/edt_maloai"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_border" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mã sản phẩm"
+                                android:textSize="15dp" />
+
+                            <EditText
+                                android:id="@+id/edt_donvi"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/edittext_border" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginHorizontal="10dp"
-                        android:backgroundTint="@color/blue_600"
-                        android:background="@color/buttonsearch"
-                        android:text="Lưu" />
+                        android:text="Hình ảnh"
+                        android:textSize="15dp" />
 
-                    <Button
-                        android:id="@+id/button_cancel"
-                        android:layout_width="0dp"
-                        android:layout_marginHorizontal="10dp"
+                    <ImageView
+                        android:id="@+id/image_gallery"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/red"
-                        android:background="@color/buttonsearch"
-                        android:layout_weight="1"
-                        android:text="Hủy" />
-                </LinearLayout>
+                        android:layout_marginVertical="10dp"
+                        app:srcCompat="@drawable/images" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edt_image"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="7"
+                            android:background="@drawable/edittext_border" />
+
+                        <Button
+                            android:id="@+id/btn_selectimage"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_add"
+                            android:backgroundTint="@color/buttonsearch"
+                            android:text="..."
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_addproduct"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@color/buttonsearch"
+                            android:backgroundTint="@color/blue_600"
+                            android:text="Lưu" />
+
+                        <Button
+                            android:id="@+id/button_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_weight="1"
+                            android:background="@color/buttonsearch"
+                            android:backgroundTint="@color/red"
+                            android:text="Hủy" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,17 @@
 package com.example.myapplication.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.myapplication.Fragment.Customer.Fragment_customer
-import com.example.myapplication.Fragment.Dashboard.Fragment_Dashboard
-import com.example.myapplication.Fragment.Product.Fragment_Product
-import com.example.myapplication.Fragment.Staff.Fragment_staff
+import com.example.myapplication.Fragment_Admin.Customer.Fragment_customer
+import com.example.myapplication.Fragment_Admin.Dashboard.Fragment_Dashboard
+import com.example.myapplication.Fragment_Admin.Product.Fragment_Product
+import com.example.myapplication.Fragment_Admin.ProductType.Fragment_producttype
+import com.example.myapplication.Fragment_Admin.Staff.Fragment_staff
 import com.example.myapplication.R
 import com.google.android.material.navigation.NavigationView
 
@@ -51,6 +53,18 @@ class AdminActivity : AppCompatActivity() {
                 }
                 R.id.nav_staff ->{
                     supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_staff()).commit()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_producttype -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_producttype()).commit();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    true
+                }
+                R.id.nav_logout ->   {
+                    val intent =  Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
