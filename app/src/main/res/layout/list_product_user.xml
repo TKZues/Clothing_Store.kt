@@ -36,13 +36,5 @@
         app:layout_constraintStart_toStartOf="@+id/txt_tensp"
         app:layout_constraintTop_toBottomOf="@+id/txt_tensp" />
 
-    <Button
-        android:id="@+id/btn_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_gia" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,14 +7,15 @@ import com.example.myapplication.Data.Model.Model_product
 import com.example.myapplication.R
 
 class Product_Detail : ComponentActivity() {
+    private lateinit var nameprouduct : TextView;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_productdetail)
 
-//        txt_nameproduct = findViewById(R.id.txt_nameproduct)
-//        val product = intent.getSerializableExtra("product") as Model_product
+        nameprouduct = findViewById(R.id.txt_nameproduct)
+        val productname = intent.getStringExtra("productname")
 
-//        txt_nameproduct.text = product.tensp
+        nameprouduct.text = productname
 
     }
 }

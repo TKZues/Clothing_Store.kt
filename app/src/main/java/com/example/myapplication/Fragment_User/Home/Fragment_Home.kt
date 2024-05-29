@@ -42,8 +42,8 @@ private lateinit var btn_detail: Button
         val adapter1 = Adapter_product_user(product, object : Adapter_product_user.OnClickListener {
             override fun onClick(position: Int, model: Model_product) {
                 val intent = Intent(requireContext(), Product_Detail::class.java)
-                intent.putExtra("product", product)
-                startActivity(intent)
+                intent.putExtra("productname", model.tensp)
+                 startActivity(intent)
             }
         })
         rv_product.adapter = adapter1
