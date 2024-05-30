@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.myapplication.Data.Mode.Model_customer
+import com.example.myapplication.Data.Model.Model_cart
 import com.example.myapplication.Data.Model.Model_product
 import com.example.myapplication.Data.Model.Model_producttype
 import com.example.myapplication.Data.Model.Model_staff
@@ -12,7 +13,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "p8"
+        private const val DATABASE_NAME = "p10"
         private const val TABLE_PRODUCTS = "Products"
 
         private const val COLUMN_ID = "id"
@@ -51,6 +52,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val lsp_id = "idlsp"
         private const val tenlsp = "tenlsp"
         private const val imglsp = "imglsp"
+
+
+        //Bảng cart
+        private const val TABLE_CART = "cart"
+        private const val cartid = "cartid"
+        private const val quantity = "quantity"
+        private const val product_id  = "product_id"
 
     }
 
@@ -93,6 +101,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + "$KH_SODT TEXT,"
                 + "$KH_GHICHU TEXT)")
         db?.execSQL(CREATE_KH_TABLE)
+
+        val CREATE_CART_TABLE = ("CREATE TABLE $TABLE_CART("
+                + "$cartid INTEGER PRIMARY KEY AUTOINCREMENT,"
+                +  "$quantity INTEGER,"
+                + "$product_id TEXT,"
+                + "FOREIGN KEY (product_id) REFERENCES $TABLE_NHANVIEN($COLUMN_MASP))")
+        db?.execSQL(CREATE_CART_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -100,6 +115,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NHANVIEN")
         db?.execSQL(" DROP TABLE IF EXISTS $TABLE_LOAISANPHAM ")
         db?.execSQL(" DROP TABLE IF EXISTS $TABLE_KH")
+        db?.execSQL(" DROP TABLE IF EXISTS $TABLE_CART ")
         onCreate(db)
     }
 
@@ -159,6 +175,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         val success = db.insert(TABLE_KH, null, values)
 
         return success;
+    }
+
+    fun addCart(cart: Model_cart): Long{
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(quantity, cart.quantity)
+        values.put(product_id, cart.product_id)
+        val success = db.insert(TABLE_CART, null, values)
+
+        return success
     }
 
     @SuppressLint("Range")

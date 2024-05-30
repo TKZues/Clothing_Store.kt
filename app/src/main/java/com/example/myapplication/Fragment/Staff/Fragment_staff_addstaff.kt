@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.myapplication.Data.Model.Model_staff
 import com.example.myapplication.R
 import java.util.Calendar
 
@@ -77,7 +78,8 @@ class Fragment_staff_addstaff : Fragment() {
         val phongban = edt_department.text.toString();
         val cvu = edt_role.text.toString();
         if(tennv.isNotEmpty() && dc.isNotEmpty()&& ns.isNotEmpty() && gt.isNotEmpty() && sdt.isNotEmpty()&& email.isNotEmpty()&& ngaylam.isNotEmpty()&& phongban.isNotEmpty()&& cvu.isNotEmpty()){
-            val status = dbHelper.addStaff(tennv,gt, ns,cvu,phongban ,ngaylam,dc,sdt,email)
+            val staff = Model_staff(tennv,gt, ns,cvu,phongban ,ngaylam,dc,sdt,email)
+            val status = dbHelper.addStaff(staff)
             if(status > -1){
                 Toast.makeText(context,"Them thành công",Toast.LENGTH_SHORT).show();
                 edt_namestaff.text.clear();

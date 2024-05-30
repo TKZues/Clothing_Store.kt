@@ -21,6 +21,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.myapplication.Data.Model.Model_product
 import com.example.myapplication.R
 import java.io.IOException
 
@@ -95,7 +96,8 @@ class Fragment_ProductAdditems : Fragment() {
         val image = edt_imageSource.text.toString()
 
         if (masp.isNotEmpty() && tensp.isNotEmpty() && gia != null && maloai.isNotEmpty() && donvi.isNotEmpty() && image.isNotEmpty()) {
-            val status = dbHelper.addProduct(masp, tensp, gia, maloai, donvi, image)
+            val product = Model_product(masp, tensp, gia, maloai, donvi, image)
+            val status = dbHelper.addProduct(product)
             if (status > -1) {
                 Toast.makeText(context, "Product added successfully!", Toast.LENGTH_SHORT).show()
                 // Clear the inputs

@@ -47,6 +47,7 @@ private lateinit var btn_detail: Button
                 intent.putExtra("productname", model.tensp)
                 intent.putExtra("productprice", model.gia)
                 intent.putExtra("imgsource", model.img)
+                intent.putExtra("productid", model.masp)
                  startActivity(intent)
             }
         })
