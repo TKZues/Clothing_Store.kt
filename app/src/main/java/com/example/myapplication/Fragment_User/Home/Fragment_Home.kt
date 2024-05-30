@@ -1,7 +1,6 @@
 package com.example.myapplication.Fragment_User.Home
 
 import DatabaseHelper
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -42,7 +41,12 @@ private lateinit var btn_detail: Button
         val adapter1 = Adapter_product_user(product, object : Adapter_product_user.OnClickListener {
             override fun onClick(position: Int, model: Model_product) {
                 val intent = Intent(requireContext(), Product_Detail::class.java)
+//                intent.setType("image/*")
+//                intent.setAction(Intent.ACTION_GET_CONTENT)
+//                intent.setAction(Intent.ACTION_OPEN_DOCUMENT)
                 intent.putExtra("productname", model.tensp)
+                intent.putExtra("productprice", model.gia)
+                intent.putExtra("imgsource", model.img)
                  startActivity(intent)
             }
         })

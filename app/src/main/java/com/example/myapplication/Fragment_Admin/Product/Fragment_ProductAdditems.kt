@@ -149,7 +149,7 @@ class Fragment_ProductAdditems : Fragment() {
     }
 
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
         mActivityResultLauncher.launch(Intent.createChooser(intent, "Select Picture"))
     }
