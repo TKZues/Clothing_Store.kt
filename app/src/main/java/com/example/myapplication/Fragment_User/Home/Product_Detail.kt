@@ -32,12 +32,13 @@ class Product_Detail : AppCompatActivity() {
     private lateinit var txt_des : TextView;
     private lateinit var txt_productprice : TextView;
     private lateinit var img_product : ImageView;
+    private lateinit var imgv_back : ImageView;
     private val REQUEST_PERMISSION_CODE = 100
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_productdetail) 
+        setContentView(R.layout.home_productdetail)
         txt_productprice = findViewById(R.id.txt_productprice)
         img_product = findViewById(R.id.img_product)
         txt_productname = findViewById(R.id.txt_productname)
