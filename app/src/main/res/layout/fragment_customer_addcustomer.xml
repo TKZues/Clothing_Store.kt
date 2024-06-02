@@ -32,38 +32,33 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textViewe"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="Họ tên" />
-                <EditText
-                    android:id="@+id/edt_namecus"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_border"
-                    />
-                <TextView
-                    android:id="@+id/textViewr"
+                    style="@style/parent">
+                <EditText
+                    style="@style/modifiedEditText"
+                    android:id="@+id/edt_namecus"
+                    android:hint="Họ tên"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="Địa chỉ" />
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    style="@style/parent">
                 <EditText
                     android:id="@+id/edt_addresscus"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_border"
+                    android:layout_height="wrap_content"
+                    android:hint="Địa chỉ"
+                   style="@style/modifiedEditText"
                     />
-                <TextView
-                    android:id="@+id/textViewt"
-                    android:layout_width="match_parent"
-                    android:textSize="15dp"
-                    android:layout_height="30dp"
-                    android:text="Ngày sinh" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -105,20 +100,18 @@
                         android:layout_marginRight="5dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView8"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="Giới tính" />
-
+                            android:layout_marginTop="5dp"
+                            style="@style/parent">
                         <EditText
                             android:id="@+id/edt_gendercus"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_border" />
+                            android:layout_height="wrap_content"
+                            android:hint="Giới tính"
+                            style="@style/modifiedEditText" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -128,36 +121,34 @@
                         android:layout_marginLeft="5dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView9"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="15dp"
-                            android:text="Số điện thoại" />
-
+                            android:layout_marginTop="5dp"
+                            style="@style/parent">
                         <EditText
                             android:id="@+id/edt_phonecus"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edittext_border" />
+                            android:layout_height="wrap_content"
+                            android:hint="Số điện thoại"
+                            style="@style/modifiedEditText"/>
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView7"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:textSize="15dp"
-                    android:layout_height="30dp"
-                    android:text="Ghi chú" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    style="@style/parent">
                 <EditText
                     android:id="@+id/edt_notecus"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_border"
+                    android:layout_height="wrap_content"
+                    android:hint="Ghi chú"
+                    style="@style/modifiedEditText"
                     />
-
+                </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
@@ -170,8 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginHorizontal="10dp"
-                        android:backgroundTint="@color/blue_600"
-                        android:background="@color/buttonsearch"
+                        android:background="@drawable/buttonsave"
                         android:text="Lưu" />
 
                     <Button
@@ -179,8 +169,7 @@
                         android:layout_width="0dp"
                         android:layout_marginHorizontal="10dp"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/red"
-                        android:background="@color/buttonsearch"
+                        android:background="@drawable/buttoncancel"
                         android:layout_weight="1"
                         android:text="Hủy" />
                 </LinearLayout>

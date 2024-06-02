@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/primaryTextColor">
 
     <ImageView
         android:id="@+id/imageView"
@@ -17,11 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-
+        android:textColor="@color/white"
         android:text="Tên người dùng"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/nav_header_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

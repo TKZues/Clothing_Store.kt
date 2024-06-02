@@ -58,7 +58,7 @@ class Fragment_customer_add : Fragment() {
         val note = edt_notecus.text.toString();
 
         if(name.isNotEmpty() && address.isNotEmpty() && gender.isNotEmpty() && phone.isNotEmpty() && note.isNotEmpty()){
-            val customer = Model_customer(name,address,daycus,gender, phone, note);
+            val customer = Model_customer(name,address,daycus,gender, phone, note,1);
             val status = dbHelper.addCustomer(customer)
             if(status > -1){
                 Toast.makeText(context, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();

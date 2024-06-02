@@ -23,14 +23,28 @@ class UserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?,) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
-      navigation_bottom = findViewById(R.id.navigation_bottom)
+        val accountId = intent.getLongExtra("account_id", -1)
+        navigation_bottom = findViewById(R.id.navigation_bottom)
         navigation_bottom.setOnNavigationItemSelectedListener {
             var selectedFragment : Fragment? =
                 when(it.itemId){
-                    R.id.nav_explore -> Fragment_Home()
+                    R.id.nav_explore -> Fragment_Home().apply {
+
+                        arguments = Bundle().apply {
+                            putLong("account_id", accountId)
+                        }
+                    }
                     R.id.nav_wishlist -> Fragment_wishlist()
-                    R.id.nav_cart -> Fragment_cart()
-                    R.id.nav_profile -> Fragment_profile()
+                    R.id.nav_cart -> Fragment_cart().apply {
+                        arguments = Bundle().apply {
+                            putLong("account_id", accountId)
+                        }
+                    }
+                    R.id.nav_profile -> Fragment_profile().apply {
+                        arguments = Bundle().apply {
+                            putLong("account_id", accountId)
+                        }
+                    }
                     else -> null
                 }
             if (selectedFragment !=null){

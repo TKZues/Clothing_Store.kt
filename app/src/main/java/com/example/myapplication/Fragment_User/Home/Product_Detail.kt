@@ -43,11 +43,16 @@ class Product_Detail : AppCompatActivity() {
     private lateinit var btn_addcart : Button;
     private lateinit var txt_quantity : EditText;
     private val REQUEST_PERMISSION_CODE = 100
+    private var accountId: Long = -1
+    private var khid: Long = -1
+    private var id: Long = -1
+    private var productid: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_productdetail)
+        dbHelper = DatabaseHelper(this)
         txt_productprice = findViewById(R.id.txt_productprice)
         img_product = findViewById(R.id.img_product)
         txt_productname = findViewById(R.id.txt_productname)
@@ -56,16 +61,21 @@ class Product_Detail : AppCompatActivity() {
         imgv_back = findViewById(R.id.imgv_back)
         txt_quantity = findViewById(R.id.txt_quantity)
         btn_addcart = findViewById(R.id.btn_addcart)
-        dbHelper = DatabaseHelper(this)
+
         val productname = intent.getStringExtra("productname")
         val imgUriString = intent.getStringExtra("imgsource")
-        val productid = intent.getStringExtra("productid")
+        productid = intent.getStringExtra("productid").toString()
         val productprice = intent.getDoubleExtra("productprice", 1.0)
+        accountId = intent.getLongExtra("account_id", -1)
+        khid = dbHelper.getIDKH(accountId)
 
         txt_productname.text = productname
         txt_productprice.text = productprice.toString()
         txt_des.text = imgUriString
-        txt_idsp.text = productid
+        txt_idsp.text = productid.toString()
+
+        id = dbHelper.getIdProduct(productid)
+
         imgUriString?.let {
             Glide.with(this)
                 .load(it)
@@ -88,7 +98,7 @@ class Product_Detail : AppCompatActivity() {
         val productid = txt_idsp.text.toString()
 
         if(quantity != null && productid.isNotEmpty()){
-            val cart = Model_cart(quantity, productid);
+            val cart = Model_cart(quantity, id, accountId);
             val status = dbHelper.addCart(cart)
             if (status > -1){
                 Toast.makeText(this, "Theem vao gio hang thanh cong", Toast.LENGTH_SHORT).show()

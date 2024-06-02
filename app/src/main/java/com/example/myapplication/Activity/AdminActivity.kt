@@ -32,6 +32,10 @@ class AdminActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_Product()).commit()
+        drawerLayout.closeDrawer(GravityCompat.START)
+
+
         navigationView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_dashboard -> {

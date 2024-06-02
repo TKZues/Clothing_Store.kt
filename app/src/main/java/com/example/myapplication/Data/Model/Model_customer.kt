@@ -6,5 +6,6 @@ package com.example.myapplication.Data.Mode
         val daycus: String,
         val gender: String,
         val phonecus: String,
-        val notecus: String
+        val notecus: String,
+        val idaccount: Long
     )
