@@ -8,14 +8,14 @@
         android:icon='@drawable/listitems'
         android:title="Đơn hàng" />
     <item
-        android:id="@+id/nav_parcel"
-        android:icon="@drawable/deliverytruck"
-        android:title="Bưu kiện"
+        android:id="@+id/nav_inventory"
+        android:icon="@drawable/inv"
+        android:title="Tồn kho"
         />
     <item
-        android:id="@+id/nav_help"
+        android:id="@+id/nav_phieunhap"
         android:icon="@drawable/customer"
-        android:title="Chăm sóc khách hàng"
+        android:title="Phiếu nhập"
         />
     <item
         android:id="@+id/nav_customer"

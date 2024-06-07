@@ -3,5 +3,6 @@ package com.example.myapplication.Data.Model
 class Model_OrderDetail (
     val orderid: Long,
     val productid: Long,
-    val quantity: Int
+    val quantity: Int,
+    val total: Double
 )

@@ -98,7 +98,7 @@ class Product_Detail : AppCompatActivity() {
         val productid = txt_idsp.text.toString()
 
         if(quantity != null && productid.isNotEmpty()){
-            val cart = Model_cart(quantity, id, accountId);
+            val cart = Model_cart(quantity,txt_productprice.text.toString().toDouble()*quantity ,id, accountId );
             val status = dbHelper.addCart(cart)
             if (status > -1){
                 Toast.makeText(this, "Theem vao gio hang thanh cong", Toast.LENGTH_SHORT).show()

@@ -4,10 +4,13 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.myapplication.Data.Mode.Model_customer
+import com.example.myapplication.Data.Model.Model_CTPhieuNhap
 import com.example.myapplication.Data.Model.Model_Order
 import com.example.myapplication.Data.Model.Model_OrderDetail
+import com.example.myapplication.Data.Model.Model_Phieunhap
 import com.example.myapplication.Data.Model.Model_account
 import com.example.myapplication.Data.Model.Model_cart
+import com.example.myapplication.Data.Model.Model_inventory
 import com.example.myapplication.Data.Model.Model_product
 import com.example.myapplication.Data.Model.Model_producttype
 import com.example.myapplication.Data.Model.Model_staff
@@ -16,7 +19,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "a5"
+        private const val DATABASE_NAME = "5"
 
 
         //Bảng và cột login
@@ -73,6 +76,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val TABLE_CART = "cart"
         private const val cartid = "cartid"
         private const val quantity = "quantity"
+        private const val total = "total"
         private const val product_id  = "product_id"
         private const val customer_id  = "customer_id"
 
@@ -81,6 +85,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val order_id = "order_id"
         private const val order_date = "order_date"
         private const val order_customer_id = "customer_id"
+        private const val order_totalall = "totalall"
 
         // Bảng chi tiết đơn hàng
         private const val TABLE_ORDER_DETAILS = "order_details"
@@ -88,7 +93,29 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val order_id_fk = "order_id"
         private const val product_id_fk = "product_id"
         private const val order_quantity = "quantity"
+        private const val order_total = "total"
+        // Bảng ton kho (inventory)
+        private const val TABLE_INVENTORY = "inventory"
+        private const val inventory_id = "inventory_id"
+        private const val inventory_product_id = "product_id"
+        private const val inventory_quantity = "quantity"
 
+        private const val TABLE_PHIEU_NHAP = "import_receipts"
+        private const val PN_ID = "id"
+        private const val PN_MAPN = "mapn"
+        private const val PN_NGAY_NHAP = "ngay_nhap"
+        private const val PN_NSX = "nsx"
+        private const val PN_THANH_TIEN = "thanh_tien"
+        private const val PN_GHICHU = "ghichu"
+
+        // Bảng chi tiết nhập và cột
+        private const val TABLE_CHI_TIET_NHAP = "import_receipt_details"
+        private const val CTN_ID = "id"
+        private const val CTN_SO_LUONG = "so_luong"
+        private const val CTN_DON_GIA = "don_gia"
+        private const val CTN_THANH_TIEN = "thanh_tien"
+        private const val CTN_MA_SP = "ma_sp"
+        private const val CTN_PN_ID = "pn_id"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -145,6 +172,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         val CREATE_CART_TABLE = ("CREATE TABLE $TABLE_CART("
                 + "$cartid INTEGER PRIMARY KEY AUTOINCREMENT,"
                 +  "$quantity INTEGER,"
+                +  "$total double,"
                 + "$product_id TEXT,"
                 + "$customer_id INTEGER,"
                 + "FOREIGN KEY ($product_id) REFERENCES $TABLE_PRODUCTS($COLUMN_MASP),"
@@ -156,6 +184,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         val CREATE_ORDERS_TABLE = ("CREATE TABLE $TABLE_ORDERS ("
                 + "$order_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "$order_date TEXT,"
+                + "$order_totalall double,"
                 + "$order_customer_id INTEGER,"
                 + "FOREIGN KEY ($order_customer_id) REFERENCES $TABLE_KH($KH_ID))")
         db?.execSQL(CREATE_ORDERS_TABLE)
@@ -165,10 +194,37 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + "$order_id_fk INTEGER,"
                 + "$product_id_fk INTEGER,"
                 + "$order_quantity INTEGER,"
+                + "$order_total double,"
                 + "FOREIGN KEY ($order_id_fk) REFERENCES $TABLE_ORDERS($order_id),"
                 + "FOREIGN KEY ($product_id_fk) REFERENCES $TABLE_PRODUCTS($COLUMN_ID))")
         db?.execSQL(CREATE_ORDER_DETAILS_TABLE)
 
+        val CREATE_INVENTORY_TABLE = ("CREATE TABLE $TABLE_INVENTORY ("
+                + "$inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$inventory_product_id INTEGER,"
+                + "$inventory_quantity INTEGER,"
+                + "FOREIGN KEY ($inventory_product_id) REFERENCES $TABLE_PRODUCTS($COLUMN_ID))")
+        db?.execSQL(CREATE_INVENTORY_TABLE)
+
+        val CREATE_PHIEU_NHAP_TABLE = ("CREATE TABLE $TABLE_PHIEU_NHAP ("
+                + "$PN_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$PN_MAPN TEXT,"
+                + "$PN_NGAY_NHAP TEXT,"
+                + "$PN_NSX TEXT,"
+                + "$PN_GHICHU TEXT,"
+                + "$PN_THANH_TIEN REAL)")
+        db?.execSQL(CREATE_PHIEU_NHAP_TABLE)
+
+        val CREATE_CHI_TIET_NHAP_TABLE = ("CREATE TABLE $TABLE_CHI_TIET_NHAP ("
+                + "$CTN_ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$CTN_SO_LUONG INTEGER,"
+                + "$CTN_DON_GIA REAL,"
+                + "$CTN_THANH_TIEN REAL,"
+                + "$CTN_MA_SP TEXT,"
+                + "$CTN_PN_ID INTEGER,"
+                + "FOREIGN KEY ($CTN_PN_ID) REFERENCES $TABLE_PHIEU_NHAP($PN_MAPN),"
+                + "FOREIGN KEY ($CTN_MA_SP) REFERENCES $TABLE_PRODUCTS($COLUMN_MASP))")
+        db?.execSQL(CREATE_CHI_TIET_NHAP_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -180,6 +236,9 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL(" DROP TABLE IF EXISTS $TABLE_ACCOUNT ")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_ORDERS")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_ORDER_DETAILS")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_INVENTORY")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_PHIEU_NHAP")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_CHI_TIET_NHAP")
         onCreate(db)
     }
 
@@ -239,8 +298,19 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
         // Inserting Row
         val success = db.insert(TABLE_PRODUCTS, null, values)
-//        db.close() // Closing database connection
+
         return success
+    }
+
+    fun addInventory(invetory: Model_inventory): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(inventory_product_id, invetory.productId)
+            put(inventory_quantity, invetory.quantity)
+        }
+        val result = db.insert(TABLE_INVENTORY, null, values)
+
+        return result
     }
 
     fun addStaff(staff: Model_staff): Long {
@@ -288,6 +358,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun addCart(cart: Model_cart): Long{
         val db = this.writableDatabase
         val values = ContentValues()
+        values.put(total, cart.thanhtien)
         values.put(quantity, cart.quantity)
         values.put(product_id, cart.product_id)
         values.put(customer_id, cart.customer_id)
@@ -295,6 +366,79 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
         return success
     }
+
+    fun addPhieuNhap(phieunhap: Model_Phieunhap): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(PN_MAPN, phieunhap.mapn)
+            put(PN_NGAY_NHAP, phieunhap.ngayNhap)
+            put(PN_NSX, phieunhap.nsx)
+            put(PN_GHICHU, phieunhap.ghichu)
+            put(PN_THANH_TIEN, phieunhap.thanhTien)
+        }
+        return db.insert(TABLE_PHIEU_NHAP, null, values)
+    }
+
+    fun addChiTietNhap(ctphieunhap: Model_CTPhieuNhap): Long {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(CTN_SO_LUONG, ctphieunhap.soLuong)
+            put(CTN_DON_GIA, ctphieunhap.donGia)
+            put(CTN_THANH_TIEN, ctphieunhap.thanhTien)
+            put(CTN_MA_SP, ctphieunhap.maSp)
+            put(CTN_PN_ID, ctphieunhap.pnId)
+        }
+        return db.insert(TABLE_CHI_TIET_NHAP, null, values)
+    }
+
+    @SuppressLint("Range")
+    fun getAllPhieuNhap(): ArrayList<Model_Phieunhap> {
+        val phieuNhapList = ArrayList<Model_Phieunhap>()
+        val selectQuery = "SELECT * FROM $TABLE_PHIEU_NHAP"
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(selectQuery, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val phieuNhap = Model_Phieunhap(
+                    ngayNhap = cursor.getString(cursor.getColumnIndex(PN_NGAY_NHAP)),
+                    nsx = cursor.getString(cursor.getColumnIndex(PN_NSX)),
+                    thanhTien = cursor.getDouble(cursor.getColumnIndex(PN_THANH_TIEN)),
+                    ghichu = cursor.getString(cursor.getColumnIndex(PN_GHICHU)),
+                    mapn = cursor.getString(cursor.getColumnIndex(PN_MAPN)),
+                )
+                phieuNhapList.add(phieuNhap)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return phieuNhapList
+    }
+//
+//    @SuppressLint("Range")
+//    fun getAllChiTietNhap(pnId: Long): ArrayList<ChiTietNhap> {
+//        val chiTietNhapList = ArrayList<ChiTietNhap>()
+//        val selectQuery = "SELECT * FROM $TABLE_CHI_TIET_NHAP WHERE $CTN_PN_ID = ?"
+//        val db = this.readableDatabase
+//        val cursor = db.rawQuery(selectQuery, arrayOf(pnId.toString()))
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                val chiTietNhap = ChiTietNhap(
+//                    id = cursor.getLong(cursor.getColumnIndex(CTN_ID)),
+//                    soLuong = cursor.getInt(cursor.getColumnIndex(CTN_SO_LUONG)),
+//                    donGia = cursor.getDouble(cursor.getColumnIndex(CTN_DON_GIA)),
+//                    thanhTien = cursor.getDouble(cursor.getColumnIndex(CTN_THANH_TIEN)),
+//                    maSp = cursor.getString(cursor.getColumnIndex(CTN_MA_SP)),
+//                    pnId = cursor.getLong(cursor.getColumnIndex(CTN_PN_ID))
+//                )
+//                chiTietNhapList.add(chiTietNhap)
+//            } while (cursor.moveToNext())
+//        }
+//        cursor.close()
+//        return chiTietNhapList
+//    }
+
+
 
     fun addOrder(order: Model_Order): Long {
         val db = this.writableDatabase
@@ -375,22 +519,34 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
             // Nếu orderId khác -1 (không xảy ra lỗi)
             if (orderId != -1L) {
+                var totalAll = 0.0
                 // Tạo chi tiết đơn hàng cho từng sản phẩm trong giỏ hàng
                 for ((product, quantity) in cartItems) {
                     val productId = getIdProduct(product.masp) // Lấy ID của sản phẩm từ mã sản phẩm
+                    val total = product.gia * quantity
+                    totalAll += total
                     val orderDetailValues = ContentValues().apply {
                         put(order_id_fk, orderId)
                         put(product_id_fk, productId)
                         put(order_quantity, quantity)
+                        put(order_total, total)
+
                     }
                     // Thêm chi tiết đơn hàng vào cơ sở dữ liệu
                     db.insert(TABLE_ORDER_DETAILS, null, orderDetailValues)
                 }
 
-                // Xóa giỏ hàng sau khi tạo đơn hàng thành công
-                val whereClause = "$customer_id = ?"
-                val whereArgs = arrayOf(customerId.toString())
-                db.delete(TABLE_CART, whereClause, whereArgs)
+                val orderUpdateValues = ContentValues().apply {
+                    put(order_totalall, totalAll)
+                }
+                val whereClause = "$order_id = ?"
+                val whereArgs = arrayOf(orderId.toString())
+                db.update(TABLE_ORDERS, orderUpdateValues, whereClause, whereArgs)
+
+                // Clear the cart after successful order creation
+                val cartDeleteWhereClause = "$customer_id = ?"
+                val cartDeleteWhereArgs = arrayOf(customerId.toString())
+                db.delete(TABLE_CART, cartDeleteWhereClause, cartDeleteWhereArgs)
 
                 // Đặt giao dịch thành công
                 db.setTransactionSuccessful()
@@ -427,7 +583,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             } while (cursor.moveToNext())
         }
         cursor.close()
-        db.close()
         return productList
     }
     @SuppressLint("Range")
@@ -446,7 +601,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             }while (cursor.moveToNext())
         }
         cursor.close()
-        db.close()
+
         return producttypeList
     }
     @SuppressLint("Range")
@@ -471,7 +626,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
         }
         cursor.close()
-        db.close()
+
         return customerList
     }
 
@@ -498,7 +653,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             }while (cursor.moveToNext())
         }
         cursor.close()
-        db.close()
+
         return staffList
     }
 

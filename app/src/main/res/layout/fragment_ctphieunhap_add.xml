@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chi Tiết Phiếu Nhập"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/txtmapn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/etProductCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mã Sản Phẩm"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số Lượng"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/etUnitPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Đơn Giá"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/etTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Thành tiền"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/btnAddEntryDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lưu Chi Tiết Phiếếu nhập"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

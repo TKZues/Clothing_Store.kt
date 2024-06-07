@@ -18,6 +18,6 @@ class Fragment_producttype : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_producttype, container, false)
+        return inflater.inflate(R.layout.fragment__producttype, container, false)
     }
 }

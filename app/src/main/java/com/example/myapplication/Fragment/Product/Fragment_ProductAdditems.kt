@@ -65,25 +65,24 @@ class Fragment_ProductAdditems : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment__product_additems, container, false)
         dbHelper = DatabaseHelper(requireContext())
-         buttonAdd = view.findViewById(R.id.btn_selectimage)
-         buttonAddProduct = view.findViewById(R.id.button_addproduct)
+        buttonAdd = view.findViewById(R.id.btn_selectimage)
+        buttonAddProduct = view.findViewById(R.id.button_addproduct)
         edt_masp = view.findViewById(R.id.edt_masp)
-         edt_tensp = view.findViewById(R.id.edt_tensp)
-         edt_gia = view.findViewById(R.id.edt_gia)
-         edt_maloai = view.findViewById(R.id.edt_maloai)
-         edt_donvi = view.findViewById(R.id.edt_donvi)
-        edt_imageSource = view.findViewById(R.id.edt_image) // Ensure correct reference
+        edt_tensp = view.findViewById(R.id.edt_tensp)
+        edt_gia = view.findViewById(R.id.edt_gia)
+        edt_maloai = view.findViewById(R.id.edt_maloai)
+        edt_donvi = view.findViewById(R.id.edt_donvi)
+        edt_imageSource = view.findViewById(R.id.edt_image)
         imageGalleryView = view.findViewById(R.id.image_gallery)
 
         buttonAdd.setOnClickListener {
             onClickRequestPermission()
         }
-        buttonAddProduct.setOnClickListener(View.OnClickListener {
-            addProduct();
-        })
+        buttonAddProduct.setOnClickListener {
+            addProduct()
+        }
         return view
     }
 
@@ -100,7 +99,6 @@ class Fragment_ProductAdditems : Fragment() {
             val status = dbHelper.addProduct(product)
             if (status > -1) {
                 Toast.makeText(context, "Product added successfully!", Toast.LENGTH_SHORT).show()
-                // Clear the inputs
                 edt_masp.text.clear()
                 edt_tensp.text.clear()
                 edt_gia.text.clear()
@@ -114,7 +112,6 @@ class Fragment_ProductAdditems : Fragment() {
             Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     private fun onClickRequestPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
