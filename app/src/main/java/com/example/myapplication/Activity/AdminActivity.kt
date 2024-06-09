@@ -13,6 +13,7 @@ import com.example.myapplication.Fragment_Admin.Inventory.Fragment_inventory
 import com.example.myapplication.Fragment_Admin.Customer.Fragment_customer
 import com.example.myapplication.Fragment_Admin.Dashboard.Fragment_Dashboard
 import com.example.myapplication.Fragment_Admin.PhieuNhap.Fragment_PhieuNhap
+import com.example.myapplication.Fragment_Admin.PhieuNhapStatus.Fragment_PhieuNhap_status
 import com.example.myapplication.Fragment_Admin.Product.Fragment_Product
 import com.example.myapplication.Fragment_Admin.ProductType.Fragment_producttype
 import com.example.myapplication.Fragment_Admin.Staff.Fragment_staff
@@ -40,7 +41,7 @@ class AdminActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_Product()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_Dashboard()).commit()
         drawerLayout.closeDrawer(GravityCompat.START)
 
         navigationView.setNavigationItemSelectedListener {
@@ -84,6 +85,11 @@ class AdminActivity : AppCompatActivity() {
                 }
                 R.id.nav_phieunhap ->{
                     supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_PhieuNhap()).commit()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_statusphieunhap ->{
+                    supportFragmentManager.beginTransaction().replace(R.id.frame_layout, Fragment_PhieuNhap_status()).commit()
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }

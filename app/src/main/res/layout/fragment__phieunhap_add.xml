@@ -18,12 +18,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mã phiếu nhập" />
-    <EditText
-        android:id="@+id/etEntryDate"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ngày Nhập"
-        android:inputType="date" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etEntryDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ngày Nhập"
+            android:layout_weight="6"
+            android:inputType="date" />
+
+        <Button
+            android:id="@+id/btncalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="..." />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/etManufacturer"

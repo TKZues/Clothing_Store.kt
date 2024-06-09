@@ -1,6 +1,7 @@
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.myapplication.Data.Mode.Model_customer
@@ -14,12 +15,14 @@ import com.example.myapplication.Data.Model.Model_inventory
 import com.example.myapplication.Data.Model.Model_product
 import com.example.myapplication.Data.Model.Model_producttype
 import com.example.myapplication.Data.Model.Model_staff
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "5"
+        private const val DATABASE_NAME = "6"
 
 
         //Bảng và cột login
@@ -116,6 +119,18 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val CTN_THANH_TIEN = "thanh_tien"
         private const val CTN_MA_SP = "ma_sp"
         private const val CTN_PN_ID = "pn_id"
+
+        //order status
+        private const val TABLE_ORDER_STATUS = "order_status"
+        private const val OS_id = "id"
+        private const val OS_orderid = "order_id"
+        private const val OS_status = "status"
+
+        //order status
+        private const val TABLE_PHIEUNHAP_STATUS = "phieunhap_status"
+        private const val PS_id = "id"
+        private const val PS_phieunhapid = "phieunhap_id"
+        private const val PS_status = "status"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -225,6 +240,21 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 + "FOREIGN KEY ($CTN_PN_ID) REFERENCES $TABLE_PHIEU_NHAP($PN_MAPN),"
                 + "FOREIGN KEY ($CTN_MA_SP) REFERENCES $TABLE_PRODUCTS($COLUMN_MASP))")
         db?.execSQL(CREATE_CHI_TIET_NHAP_TABLE)
+
+        val CREATE_ORDER_STATUS_TABLE = ("CREATE TABLE order_status ("
+                + " $OS_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$OS_orderid INTEGER,"
+                + "$OS_status TEXT,"
+                + "FOREIGN KEY ($OS_orderid) REFERENCES $TABLE_ORDERS($order_id))")
+        db?.execSQL(CREATE_ORDER_STATUS_TABLE)
+
+        // Create import receipt status table
+        val CREATE_PHIEUNHAP_STATUS_TABLE = ("CREATE TABLE phieunhap_status ("
+                + "$PS_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "$PS_phieunhapid INTEGER,"
+                + "$PS_status TEXT,"
+                + "FOREIGN KEY (import_receipt_id) REFERENCES $TABLE_PHIEU_NHAP($PN_ID))")
+        db?.execSQL(CREATE_PHIEUNHAP_STATUS_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -239,7 +269,158 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_INVENTORY")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_PHIEU_NHAP")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_CHI_TIET_NHAP")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_ORDER_STATUS")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_PHIEUNHAP_STATUS")
         onCreate(db)
+    }
+
+    fun tongchitheonam(nam: Int): Double{
+        val db = this.readableDatabase
+        var totalyear = 0.0
+
+       val query = " SELECT SUM($PN_THANH_TIEN) FROM $TABLE_PHIEU_NHAP WHERE strftime('%Y', $PN_NGAY_NHAP) = ? "
+
+        val cursor: Cursor = db.rawQuery(query, arrayOf(nam.toString()))
+        if(cursor.moveToFirst()){
+            totalyear =   cursor.getDouble(0)
+        }
+        return totalyear
+
+    }
+
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    fun tongchitheoQuyNam(quy: Int, nam: Int): Double {
+        val db = this.readableDatabase
+        var totalAmount = 0.0
+
+        // Xác định khoảng thời gian của từng quý
+        val startMonth: String
+        val endMonth: String
+
+        when (quy) {
+            1 -> {
+                startMonth = "01"
+                endMonth = "03"
+            }
+            2 -> {
+                startMonth = "04"
+                endMonth = "06"
+            }
+            3 -> {
+                startMonth = "07"
+                endMonth = "09"
+            }
+            4 -> {
+                startMonth = "10"
+                endMonth = "12"
+            }
+            else -> {
+                throw IllegalArgumentException("Quý không hợp lệ")
+            }
+        }
+
+        val query = """
+        SELECT SUM($PN_THANH_TIEN)
+        FROM $TABLE_PHIEU_NHAP
+        WHERE strftime('%Y', $PN_NGAY_NHAP) = ? 
+        AND strftime('%m', $PN_NGAY_NHAP) BETWEEN ? AND ?
+    """
+        val cursor: Cursor = db.rawQuery(query, arrayOf(nam.toString(), startMonth, endMonth))
+
+        if (cursor.moveToFirst()) {
+            totalAmount = cursor.getDouble(0)
+        }
+
+        cursor.close()
+        return totalAmount
+    }
+
+    fun tongchitheoThangNam(month: Int, year: Int): Double {
+        val db = this.readableDatabase
+        var totalAmount = 0.0
+
+        val query = "SELECT SUM($PN_THANH_TIEN) FROM $TABLE_PHIEU_NHAP WHERE strftime('%Y', $PN_NGAY_NHAP) = ? AND strftime('%m', $PN_NGAY_NHAP) = ?"
+        val cursor: Cursor = db.rawQuery(query, arrayOf(year.toString(), String.format("%02d", month)))
+
+        if (cursor.moveToFirst()) {
+            totalAmount = cursor.getDouble(0)
+        }
+
+        cursor.close()
+        return totalAmount
+    }
+    fun tongchitheongay(startDate: String, endDate: String): Double {
+        val db = this.readableDatabase
+        var totalall = 0.0
+
+        val query = "SELECT SUM($PN_THANH_TIEN)  FROM $TABLE_PHIEU_NHAP WHERE $PN_NGAY_NHAP BETWEEN ? AND ?"
+        val cursor: Cursor = db.rawQuery(query, arrayOf(startDate, endDate))
+
+        if (cursor.moveToFirst()) {
+            val totalAmount = cursor.getDouble(0)
+
+            totalall += totalAmount
+        }
+
+        cursor.close()
+
+
+        return totalall
+    }
+    fun tongtonkho():Int{
+        val query = "SELECT SUM($inventory_quantity) AS total_all FROM $TABLE_INVENTORY "
+        val db = this.writableDatabase
+        val  cursor = db.rawQuery(query, null)
+
+        var total = 0;
+        if(cursor.moveToFirst()){
+            total = cursor.getInt(cursor.getColumnIndexOrThrow("total_all"))
+        }
+        cursor.close()
+        return total
+
+    }
+    fun tongsanpham():Int{
+        val query = "SELECT COUNT($COLUMN_MASP) AS total_all FROM $TABLE_PRODUCTS "
+        val db = this.writableDatabase
+        val  cursor = db.rawQuery(query, null)
+
+        var total = 0;
+        if(cursor.moveToFirst()){
+            total = cursor.getInt(cursor.getColumnIndexOrThrow("total_all"))
+        }
+        cursor.close()
+        return total
+
+    }
+    fun tongdoanhthu():Double{
+        val query = "SELECT SUM($order_totalall) AS total_all FROM $TABLE_ORDERS "
+        val db = this.writableDatabase
+        val  cursor = db.rawQuery(query, null)
+
+        var totalall = 0.0;
+        if(cursor.moveToFirst()){
+            val total = cursor.getDouble(cursor.getColumnIndexOrThrow("total_all"))
+            totalall+=total;
+        }
+        cursor.close()
+        return totalall
+
+    }
+
+    fun tongchi():Double{
+        val query = "SELECT ($PN_THANH_TIEN) AS total_all FROM $TABLE_PHIEU_NHAP "
+        val db = this.writableDatabase
+        val  cursor = db.rawQuery(query, null)
+
+        var totalall = 0.0;
+        if(cursor.moveToFirst()){
+            val total = cursor.getDouble(cursor.getColumnIndexOrThrow("total_all"))
+            totalall+=total;
+        }
+        cursor.close()
+        return totalall
+
     }
 
     fun addAccount(account: Model_account): Long {
@@ -381,14 +562,29 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     fun addChiTietNhap(ctphieunhap: Model_CTPhieuNhap): Long {
         val db = this.writableDatabase
+        var total = 0.0;
         val values = ContentValues().apply {
             put(CTN_SO_LUONG, ctphieunhap.soLuong)
             put(CTN_DON_GIA, ctphieunhap.donGia)
             put(CTN_THANH_TIEN, ctphieunhap.thanhTien)
             put(CTN_MA_SP, ctphieunhap.maSp)
             put(CTN_PN_ID, ctphieunhap.pnId)
+            total = total+ctphieunhap.thanhTien;
         }
-        return db.insert(TABLE_CHI_TIET_NHAP, null, values)
+        val insertresult =  db.insert(TABLE_CHI_TIET_NHAP, null, values)
+
+
+        if (insertresult != -1L) {
+            // Update the total amount in the import receipt
+            val updateValues = ContentValues().apply {
+                put(PN_THANH_TIEN, total)
+            }
+            val whereClause = "$PN_MAPN = ?"
+            val whereArgs = arrayOf(ctphieunhap.pnId)
+            db.update(TABLE_PHIEU_NHAP, updateValues, whereClause, whereArgs)
+        }
+
+        return  insertresult
     }
 
     @SuppressLint("Range")
@@ -510,7 +706,9 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         try {
             // Tạo đơn hàng
             val orderValues = ContentValues().apply {
-                put(order_date, System.currentTimeMillis().toString()) // hoặc sử dụng định dạng ngày thích hợp
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val todayDate = dateFormat.format(System.currentTimeMillis())
+                put(order_date, todayDate) // hoặc sử dụng định dạng ngày thích hợp
                 put(order_customer_id, customerId)
             }
 

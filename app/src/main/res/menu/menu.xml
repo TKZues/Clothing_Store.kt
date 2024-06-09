@@ -8,14 +8,20 @@
         android:icon='@drawable/listitems'
         android:title="Đơn hàng" />
     <item
-        android:id="@+id/nav_inventory"
-        android:icon="@drawable/inv"
-        android:title="Tồn kho"
+        android:id="@+id/nav_orderstatus"
+        android:icon="@drawable/dashboard1day"
+        android:title="Trạng thái đơn hàng"
         />
+
     <item
         android:id="@+id/nav_phieunhap"
         android:icon="@drawable/customer"
         android:title="Phiếu nhập"
+        />
+    <item
+        android:id="@+id/nav_statusphieunhap"
+        android:icon="@drawable/customer"
+        android:title="Trạng thái phiếu nhập"
         />
     <item
         android:id="@+id/nav_customer"
@@ -31,6 +37,11 @@
         android:id="@+id/nav_warehouse"
         android:icon="@drawable/warehouse"
         android:title="Kho hàng"
+        />
+    <item
+        android:id="@+id/nav_inventory"
+        android:icon="@drawable/inv"
+        android:title="Tồn kho"
         />
     <item
         android:id="@+id/nav_income"
@@ -52,6 +63,7 @@
         android:icon="@drawable/dashboard1day"
         android:title="Loại sản phẩm"
         />
+
     <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/logout"

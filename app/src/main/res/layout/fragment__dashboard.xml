@@ -62,12 +62,12 @@
                             android:id="@+id/textViewt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TỔNG COMMENT"
+                            android:text="TỔNG DOANH THU"
                             android:textColor="@color/black"
                             android:textSize="8dp" />
 
                         <TextView
-                            android:id="@+id/textViewy"
+                            android:id="@+id/txt_tongdoanhthu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="7"
@@ -132,12 +132,12 @@
                             android:id="@+id/textViewo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TỔNG COMMENT"
+                            android:text="TỔNG SẢN PHẨM"
                             android:textColor="@color/black"
                             android:textSize="8dp" />
 
                         <TextView
-                            android:id="@+id/textViewp"
+                            android:id="@+id/txttongsp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="7"
@@ -279,12 +279,12 @@
                             android:id="@+id/textViewj"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TỔNG COMMENT"
+                            android:text="TỔNG CHI"
                             android:textColor="@color/black"
                             android:textSize="8dp" />
 
                         <TextView
-                            android:id="@+id/textViewk"
+                            android:id="@+id/txt_tongchi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="7"
@@ -349,12 +349,12 @@
                             android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TỔNG COMMENT"
+                            android:text="TỔNG TỒN KHO"
                             android:textColor="@color/black"
                             android:textSize="8dp" />
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/txttonkho"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="7"
@@ -446,6 +446,57 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/fragment1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:layout_height="wrap_content"
+                android:text="Ngày"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/fragment2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="14dp"                android:layout_height="wrap_content"
+                android:text="Tháng"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/fragment3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="14dp"                android:layout_height="wrap_content"
+                android:text="Quý"
+                android:padding="16dp" />
+            <TextView
+                android:id="@+id/fragment4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="14dp"                android:layout_height="wrap_content"
+                android:text="Năm"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </LinearLayout>

@@ -21,6 +21,7 @@ class Fragment_ctphieunhap_add : AppCompatActivity() {
     private lateinit var etUnitPrice:TextView
     private lateinit var etTotal:TextView
     private lateinit var btnAddEntryDetail:Button
+    private lateinit var btncalendar:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_ctphieunhap_add)
@@ -31,6 +32,7 @@ class Fragment_ctphieunhap_add : AppCompatActivity() {
         etUnitPrice = findViewById(R.id.etUnitPrice)
         etTotal = findViewById(R.id.etTotal)
         btnAddEntryDetail = findViewById(R.id.btnAddEntryDetail)
+
         dbHelper = DatabaseHelper(this)
 
         val mapn = intent.getStringExtra("mapn")
@@ -39,6 +41,7 @@ class Fragment_ctphieunhap_add : AppCompatActivity() {
         btnAddEntryDetail.setOnClickListener {
             addCtphieunhap();
         }
+
     }
 
     private fun addCtphieunhap() {
